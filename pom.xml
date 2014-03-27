@@ -31,7 +31,7 @@
 
     <groupId>org.jboss.as</groupId>
     <artifactId>jboss-as-parent</artifactId>
-    <version>7.2.0.Final</version>
+    <version>7.2.0.Final-coriant.1-SNAPSHOT</version>
 
     <name>JBoss Application Server: Parent Aggregator</name>
     <description>JBoss Application Server: Parent Aggregator</description>
@@ -53,6 +53,11 @@
     </scm>
 
     <properties>
+        <skipTests>true</skipTests>
+
+        <!-- Deploy info -->
+        <nexus-host>http://vm-builds-001.nws.dcpor.nsn-rdnet.net</nexus-host>
+
          <!-- Release Info -->
         <jboss.as.release.version>${project.version}</jboss.as.release.version>
         <jboss.as.release.codename>Janus</jboss.as.release.codename>
@@ -107,6 +112,7 @@
         <version.jansi>1.8</version.jansi>
         <version.joda-time>1.6.2</version.joda-time>
         <version.junit>4.10</version.junit>
+        <version.license.plugin>1.5</version.license.plugin>
         <version.log4j>1.2.16</version.log4j>
         <version.net.jcip>1.0</version.net.jcip>
         <version.org.apache.ant>1.8.2</version.org.apache.ant>
@@ -157,7 +163,7 @@
         <version.org.jboss.common.jboss-common-beans>1.1.0.Final</version.org.jboss.common.jboss-common-beans>
         <version.org.jboss.jboss-common-core>2.2.17.GA</version.org.jboss.jboss-common-core>
         <version.org.jboss.com.sun.httpserver>1.0.1.Final</version.org.jboss.com.sun.httpserver>
-        <version.org.jboss.ejb-client>1.0.16.Final</version.org.jboss.ejb-client>
+        <version.org.jboss.ejb-client>1.0.23.Final</version.org.jboss.ejb-client>
         <version.org.jboss.ejb3.ext-api>2.0.0</version.org.jboss.ejb3.ext-api>
         <version.org.jboss.iiop-client>1.0.0.Final</version.org.jboss.iiop-client>
         <version.org.jboss.invocation>1.1.1.Final</version.org.jboss.invocation>
@@ -187,7 +193,7 @@
         <version.org.jboss.osgi.repository>2.1.0.Final</version.org.jboss.osgi.repository>
         <version.org.jboss.osgi.spi>3.2.0.Final</version.org.jboss.osgi.spi>
         <version.org.jboss.osgi.vfs>1.2.1.Final</version.org.jboss.osgi.vfs>
-        <version.org.jboss.remote-naming>1.0.5.Final</version.org.jboss.remote-naming>
+        <version.org.jboss.remote-naming>1.0.6.Final</version.org.jboss.remote-naming>
         <version.org.jboss.remoting3>3.2.14.GA</version.org.jboss.remoting3>
         <version.org.jboss.remotingjmx.remoting-jmx>1.1.0.Final</version.org.jboss.remotingjmx.remoting-jmx>
         <version.org.jboss.resteasy>2.3.5.Final</version.org.jboss.resteasy>
@@ -329,6 +335,17 @@
         </plugins>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>license-maven-plugin</artifactId>
+                    <version>${version.license.plugin}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>versions-maven-plugin</artifactId>
+                    <version>2.1</version>
+                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
@@ -6411,6 +6428,23 @@
             <properties>
                 <com.sun.tools.path>${java.home}/bundle/Classes/classes.jar</com.sun.tools.path>
             </properties>
+        </profile>
+
+        <!-- Bicnet Nexus deploy profile -->
+        <profile>
+            <id>deploy-nexus</id>
+            <distributionManagement>
+                <repository>
+                    <id>tnms-releases-repository</id>
+                    <name>TNMS Releases repository</name>
+                    <url>${nexus-host}/nexus/content/repositories/releases/</url>
+                </repository>
+                <snapshotRepository>
+                    <id>tnms-snapshots-repository</id>
+                    <name>TNMS Snapshots repository</name>
+                    <url>${nexus-host}/nexus/content/repositories/snapshots/</url>
+                </snapshotRepository>
+            </distributionManagement>
         </profile>
     </profiles>
 </project>
