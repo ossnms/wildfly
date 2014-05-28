@@ -47,7 +47,7 @@
         <dependency>
             <groupId>org.jboss.as</groupId>
             <artifactId>jboss-as-host-controller</artifactId>
-            <version>${property.old.as.version}</version>
+            <version>7.1.2.Final</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
