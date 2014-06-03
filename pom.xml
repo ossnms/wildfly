@@ -55,14 +55,11 @@
     <properties>
         <skipTests>true</skipTests>
 
-        <!-- Deploy info -->
-        <nexus-host>http://vm-builds-001.nws.dcpor.nsn-rdnet.net</nexus-host>
-
          <!-- Release Info -->
         <jboss.as.release.version>${project.version}</jboss.as.release.version>
         <jboss.as.release.codename>Janus</jboss.as.release.codename>
-        <jboss.as.scm.url>http://vmtnmsft292.pt.rd.co-int.net:8888/git/wildfly-coriant.git</jboss.as.scm.url>
-        <jboss.as.scm.connection>http://vmtnmsft292.pt.rd.co-int.net:8888/git/wildfly-coriant.git</jboss.as.scm.connection>
+        <jboss.as.scm.url>https://github.com/jbossas/jboss-as</jboss.as.scm.url>
+        <jboss.as.scm.connection>git@github.com:jbossas/jboss-as.git</jboss.as.scm.connection>
 
         <!-- Build configuration -->
         <version.surefire.plugin>2.11</version.surefire.plugin>
@@ -149,7 +146,7 @@
         <version.org.hibernate.validator>4.3.1.Final</version.org.hibernate.validator>
         <version.org.hibernate3>3.6.6.Final</version.org.hibernate3>
         <version.org.hibernate3.commons.annotations>3.2.0.Final</version.org.hibernate3.commons.annotations>
-        <version.org.hornetq>2.3.0.CR1</version.org.hornetq>
+        <version.org.hornetq>2.3.0.CR1-coriant.1</version.org.hornetq>
         <version.org.infinispan>5.2.1.Final</version.org.infinispan>
         <version.org.jacorb>2.3.2.jbossorg-4</version.org.jacorb>
         <version.org.javassist>3.15.0-GA</version.org.javassist>
@@ -6428,23 +6425,6 @@
             <properties>
                 <com.sun.tools.path>${java.home}/bundle/Classes/classes.jar</com.sun.tools.path>
             </properties>
-        </profile>
-
-        <!-- Bicnet Nexus deploy profile -->
-        <profile>
-            <id>deploy-nexus</id>
-            <distributionManagement>
-                <repository>
-                    <id>tnms-releases-repository</id>
-                    <name>TNMS Releases repository</name>
-                    <url>${nexus-host}/nexus/content/repositories/releases/</url>
-                </repository>
-                <snapshotRepository>
-                    <id>tnms-snapshots-repository</id>
-                    <name>TNMS Snapshots repository</name>
-                    <url>${nexus-host}/nexus/content/repositories/snapshots/</url>
-                </snapshotRepository>
-            </distributionManagement>
         </profile>
     </profiles>
 </project>
