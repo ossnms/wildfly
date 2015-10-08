@@ -160,7 +160,7 @@
         <version.org.hornetq>2.4.5.Final</version.org.hornetq>
         <version.org.infinispan>6.0.2.Final</version.org.infinispan>
         <version.org.jacorb>2.3.2-jboss5-coriant1</version.org.jacorb>
-        <version.org.javassist>3.18.1-GA</version.org.javassist>
+        <version.org.javassist>3.20.0-GA</version.org.javassist>
         <version.org.jberet>1.0.2.Final</version.org.jberet>
         <version.org.jdom>1.1.2</version.org.jdom>
         <version.org.jboss.aesh>0.33.11</version.org.jboss.aesh>
