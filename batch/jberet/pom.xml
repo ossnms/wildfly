@@ -30,7 +30,7 @@
     <parent>
         <groupId>org.wildfly</groupId>
         <artifactId>wildfly-batch-parent</artifactId>
-        <version>8.2.1.Final-ossnms-002</version>
+        <version>8.2.1.Final-ossnms-003</version>
     </parent>
 
     <artifactId>wildfly-jberet</artifactId>
