@@ -15,7 +15,7 @@
     <parent>
         <groupId>org.wildfly</groupId>
         <artifactId>wildfly-ts-integ</artifactId>
-        <version>8.2.1.Final-ossnms-005</version>
+        <version>8.2.1.Final-ossnms-006</version>
     </parent>
 
     <!-- ********************************************************************************** -->
@@ -23,7 +23,7 @@
     <!-- ********************************************************************************** -->
     <groupId>org.wildfly</groupId>
     <artifactId>wildfly-ts-integ-basic</artifactId>
-    <version>8.2.1.Final-ossnms-005</version>
+    <version>8.2.1.Final-ossnms-006</version>
 
     <name>WildFly Test Suite: Integration - Basic</name>
 
