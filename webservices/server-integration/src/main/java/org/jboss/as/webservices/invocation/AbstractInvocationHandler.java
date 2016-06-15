@@ -76,7 +76,7 @@ abstract class AbstractInvocationHandler extends org.jboss.ws.common.invocation.
             if (componentView == null) {
                componentView = getMSCService(componentViewName, ComponentView.class);
                if (componentView == null) {
-                  throw MESSAGES.cannotFindComponentView(componentViewName);
+                   throw MESSAGES.cannotFindComponentView(componentViewName);
                }
                if (reference == null) {
                   try {
@@ -102,22 +102,24 @@ abstract class AbstractInvocationHandler extends org.jboss.ws.common.invocation.
       try {
          // prepare for invocation
          onBeforeInvocation(wsInvocation);
-         //for spring integration we don't need to go into ee's interceptors
-         if(wsInvocation.getInvocationContext().getTargetBean() != null && endpoint.getProperty("SpringBus") != null) {
-                this.reference = new ManagedReference() {
-                    public void release() {
-                    }
-
-                    public Object getInstance() {
-                        return wsInvocation.getInvocationContext().getTargetBean();
-                    }
-                };
-         }
          // prepare invocation data
          final ComponentView componentView = getComponentView();
          Component component = componentView.getComponent();
-         if (component instanceof WSComponent && endpoint.getProperty("SpringBus") != null) {
-             ((WSComponent)component).setReference(reference);
+         //for spring integration and @FactoryType is annotated we don't need to go into ee's interceptors
+         if(wsInvocation.getInvocationContext().getTargetBean() != null
+                 && (endpoint.getProperty("SpringBus") != null)
+                 || wsInvocation.getInvocationContext().getProperty("forceTargetBean") != null) {
+             this.reference = new ManagedReference() {
+                 public void release() {
+                 }
+
+                 public Object getInstance() {
+                     return wsInvocation.getInvocationContext().getTargetBean();
+                 }
+             };
+             if (component instanceof WSComponent) {
+                 ((WSComponent) component).setReference(reference);
+             }
          }
          final Method method = getComponentViewMethod(wsInvocation.getJavaMethod(), componentView.getViewMethods());
          final InterceptorContext context = new InterceptorContext();
@@ -126,13 +128,15 @@ abstract class AbstractInvocationHandler extends org.jboss.ws.common.invocation.
          context.setParameters(wsInvocation.getArgs());
          context.putPrivateData(Component.class, component);
          context.putPrivateData(ComponentView.class, componentView);
+         if(wsInvocation.getInvocationContext().getProperty("forceTargetBean") != null) {
+             context.putPrivateData(ManagedReference.class, reference);
+         }
          // invoke method
          final Object retObj = componentView.invoke(context);
          // set return value
          wsInvocation.setReturnValue(retObj);
       }
       catch (Throwable t) {
-         log.error(MESSAGES.methodInvocationFailed(t.getLocalizedMessage()), t);
          handleInvocationException(t);
       }
       finally {
@@ -210,4 +214,3 @@ abstract class AbstractInvocationHandler extends org.jboss.ws.common.invocation.
    }
 
 }
-

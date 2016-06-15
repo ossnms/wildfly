@@ -38,12 +38,14 @@ public final class EJBEndpoint extends AbstractEndpoint {
    private final String authMethod;
    private final boolean secureWsdlAccess;
    private final String transportGuarantee;
+   private final String realmName;
 
-   public EJBEndpoint(final SessionBeanComponentDescription ejbMD, final ServiceName viewName, final Set<String> declaredSecurityRoles, final String authMethod, final boolean secureWsdlAccess, final String transportGuarantee) {
+   public EJBEndpoint(final SessionBeanComponentDescription ejbMD, final ServiceName viewName, final Set<String> declaredSecurityRoles, final String authMethod, final String realmName, final boolean secureWsdlAccess, final String transportGuarantee) {
        super(ejbMD.getComponentName(), ejbMD.getComponentClassName(), viewName);
        this.ejbMD = ejbMD;
        this.declaredSecurityRoles = declaredSecurityRoles;
        this.authMethod = authMethod;
+       this.realmName = realmName;
        this.secureWsdlAccess = secureWsdlAccess;
        this.transportGuarantee = transportGuarantee;
    }
@@ -76,6 +78,9 @@ public final class EJBEndpoint extends AbstractEndpoint {
        return transportGuarantee;
    }
 
+   public String getRealmName() {
+       return realmName;
+   }
    public ServiceName getEJBViewMethodSecurityAttributesService() {
        return EJBViewMethodSecurityAttributesService.getServiceName(ejbMD.getApplicationName(), ejbMD.getModuleName(), ejbMD.getEJBName(), getClassName());
    }

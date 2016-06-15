@@ -42,7 +42,6 @@ import org.jboss.as.subsystem.test.AbstractSubsystemBaseTest;
 import org.jboss.as.subsystem.test.AdditionalInitialization;
 import org.jboss.as.subsystem.test.KernelServices;
 import org.jboss.as.subsystem.test.KernelServicesBuilder;
-import org.jboss.as.web.WebDefinition;
 import org.jboss.dmr.ModelNode;
 import org.jboss.dmr.Property;
 import org.junit.Assert;
@@ -63,24 +62,6 @@ public class WebservicesSubsystemParserTestCase extends AbstractSubsystemBaseTes
     @Override
     protected String getSubsystemXml() throws IOException {
         return readResource("ws-subsystem12.xml"); //for default test
-    }
-
-    protected AdditionalInitialization createAdditionalInitialization() {
-        return new AdditionalInitialization() {
-            @Override
-            protected RunningMode getRunningMode() {
-                return RunningMode.ADMIN_ONLY;
-            }
-
-            @Override
-            protected void initializeExtraSubystemsAndModel(ExtensionRegistry extensionRegistry, Resource rootResource, ManagementResourceRegistration rootRegistration) {
-                super.initializeExtraSubystemsAndModel(extensionRegistry, rootResource, rootRegistration);
-                rootRegistration.registerSubModel(WebDefinition.INSTANCE);
-                Resource webSubsystem = Resource.Factory.create();
-                webSubsystem.getModel().get("default-virtual-server").set("default-host");
-                rootResource.registerChild(PathElement.pathElement("subsystem", "web"), webSubsystem);
-            }
-        };
     }
 
     @Override
@@ -189,16 +170,6 @@ public class WebservicesSubsystemParserTestCase extends AbstractSubsystemBaseTes
     }
 
     @Test
-    public void testTransformersAS712() throws Exception {
-        testRejectExpressions_1_1_0(ModelTestControllerVersion.V7_1_2_FINAL);
-    }
-
-    @Test
-    public void testTransformersAS713() throws Exception {
-        testRejectExpressions_1_1_0(ModelTestControllerVersion.V7_1_3_FINAL);
-    }
-
-    @Test
     public void testTransformersEAP600() throws Exception {
         testRejectExpressions_1_1_0(ModelTestControllerVersion.EAP_6_0_0);
     }
@@ -206,11 +177,6 @@ public class WebservicesSubsystemParserTestCase extends AbstractSubsystemBaseTes
     @Test
     public void testTransformersEAP601() throws Exception {
         testRejectExpressions_1_1_0(ModelTestControllerVersion.EAP_6_0_1);
-    }
-
-    @Test
-    public void testTransformersAS720() throws Exception {
-        testTransformers_1_2_0(ModelTestControllerVersion.V7_2_0_FINAL);
     }
 
     @Test

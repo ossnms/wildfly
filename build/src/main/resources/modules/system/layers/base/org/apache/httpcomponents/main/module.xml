@@ -35,6 +35,5 @@
         <module name="javax.api"/>
         <module name="org.apache.commons.codec"/>
         <module name="org.apache.commons.logging"/>
-        <module name="org.apache.james.mime4j"/>
     </dependencies>
 </module>

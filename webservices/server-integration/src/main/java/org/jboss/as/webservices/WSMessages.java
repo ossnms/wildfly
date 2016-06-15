@@ -148,8 +148,8 @@ public interface WSMessages {
     @Message(id = 15590, value = "Config %s, %s handler chain %s: doesn't contain handler with name %s")
     OperationFailedException missingHandler(String configName, String handlerChainType, String handlerChainId, String handlerName);
 
-    @Message(id = 15594, value = "Method invocation failed with exception: %s")
-    String methodInvocationFailed(String message);
+    //@Message(id = 15594, value = "Method invocation failed with exception: %s")
+    //String methodInvocationFailed(String message);
 
     @Message(id = 15595, value = "Unable to get URL for: %s")
     DeploymentUnitProcessingException cannotGetURLForDescriptor(@Cause Throwable cause, String resourcePath);

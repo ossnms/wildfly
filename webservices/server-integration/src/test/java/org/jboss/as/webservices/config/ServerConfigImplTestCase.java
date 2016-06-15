@@ -223,5 +223,10 @@ public class ServerConfigImplTestCase {
         public String getImplementationVersion() {
             return null;
         }
+
+        public void validatePathRewriteRule(String rule) {
+            //NOOP
+        }
+
     }
 }

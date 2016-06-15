@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2011, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2014, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -24,11 +24,12 @@ package org.jboss.as.webservices.deployers.deployment;
 import static org.jboss.as.webservices.WSLogger.ROOT_LOGGER;
 import static org.jboss.as.webservices.metadata.model.AbstractEndpoint.COMPONENT_VIEW_NAME;
 import static org.jboss.as.webservices.util.ASHelper.getJaxwsPojos;
-import static org.jboss.wsf.spi.deployment.DeploymentType.JAXWS;
 import static org.jboss.wsf.spi.deployment.EndpointType.JAXWS_JSE;
 
 import org.jboss.as.server.deployment.DeploymentUnit;
+import org.jboss.as.webservices.deployers.WSEndpointConfigMapping;
 import org.jboss.as.webservices.metadata.model.POJOEndpoint;
+import org.jboss.as.webservices.util.WSAttachmentKeys;
 import org.jboss.msc.service.ServiceName;
 import org.jboss.wsf.spi.deployment.Deployment;
 import org.jboss.wsf.spi.deployment.Endpoint;
@@ -41,12 +42,13 @@ import org.jboss.wsf.spi.deployment.Endpoint;
 final class DeploymentModelBuilderJAXWS_POJO extends AbstractDeploymentModelBuilder {
 
     DeploymentModelBuilderJAXWS_POJO() {
-        super(JAXWS, JAXWS_JSE);
+        super(JAXWS_JSE);
     }
 
     @Override
     protected void build(final Deployment dep, final DeploymentUnit unit) {
         ROOT_LOGGER.creatingEndpointsMetaDataModel("JAXWS", "POJO");
+        WSEndpointConfigMapping ecm = unit.getAttachment(WSAttachmentKeys.WS_ENDPOINT_CONFIG_MAPPING_KEY);
         for (final POJOEndpoint pojoEndpoint : getJaxwsPojos(unit)) {
             final String pojoEndpointName = pojoEndpoint.getName();
             ROOT_LOGGER.pojoName(pojoEndpointName);
@@ -56,6 +58,9 @@ final class DeploymentModelBuilderJAXWS_POJO extends AbstractDeploymentModelBuil
             final ServiceName componentViewName = pojoEndpoint.getComponentViewName();
             if (componentViewName != null) {
                 ep.setProperty(COMPONENT_VIEW_NAME, componentViewName);
+            }
+            if (ecm != null) {
+                ep.setEndpointConfig(ecm.getConfig(pojoEndpointClassName));
             }
         }
     }

@@ -140,6 +140,11 @@ abstract class AbstractSecurityMetaDataAccessorEJB implements SecurityMetaDataAc
         return hasEjbSecurityMD ? ejbSecurityMD.getTransportGuarantee() : null;
     }
 
+    public String getRealmName(final Endpoint endpoint) {
+        final EJBSecurityMetaData ejbSecurityMD = this.getEjbSecurityMetaData(endpoint);
+        final boolean hasEjbSecurityMD = ejbSecurityMD != null;
+        return hasEjbSecurityMD ? ejbSecurityMD.getRealmName() : null;
+    }
     /**
      * Gets EJB security meta data if associated with EJB endpoint.
      *

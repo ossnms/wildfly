@@ -413,7 +413,7 @@
 
                 <dependency>
                     <groupId>org.apache.cxf</groupId>
-                    <artifactId>cxf-api</artifactId>
+                    <artifactId>cxf-core</artifactId>
                 </dependency>
 
                 <dependency>
@@ -434,11 +434,6 @@
                 <dependency>
                     <groupId>org.apache.cxf</groupId>
                     <artifactId>cxf-rt-bindings-xml</artifactId>
-                </dependency>
-
-                <dependency>
-                    <groupId>org.apache.cxf</groupId>
-                    <artifactId>cxf-rt-core</artifactId>
                 </dependency>
 
                 <dependency>
@@ -468,7 +463,17 @@
 
                 <dependency>
                     <groupId>org.apache.cxf</groupId>
+                    <artifactId>cxf-rt-security</artifactId>
+                </dependency>
+
+                <dependency>
+                    <groupId>org.apache.cxf</groupId>
                     <artifactId>cxf-rt-transports-http</artifactId>
+                </dependency>
+
+                <dependency>
+                    <groupId>org.apache.cxf</groupId>
+                    <artifactId>cxf-rt-transports-http-hc</artifactId>
                 </dependency>
 
                 <dependency>
@@ -479,6 +484,11 @@
                 <dependency>
                     <groupId>org.apache.cxf</groupId>
                     <artifactId>cxf-rt-transports-jms</artifactId>
+                </dependency>
+
+                <dependency>
+                    <groupId>org.apache.cxf</groupId>
+                    <artifactId>cxf-rt-wsdl</artifactId>
                 </dependency>
 
                 <dependency>
@@ -547,8 +557,18 @@
                 </dependency>
 
                 <dependency>
+                    <groupId>org.apache.cxf.xjc-utils</groupId>
+                    <artifactId>cxf-xjc-runtime</artifactId>
+                </dependency>
+
+                <dependency>
                     <groupId>org.apache.cxf.xjcplugins</groupId>
                     <artifactId>cxf-xjc-boolean</artifactId>
+                </dependency>
+
+                <dependency>
+                    <groupId>org.apache.cxf.xjcplugins</groupId>
+                    <artifactId>cxf-xjc-bug986</artifactId>
                 </dependency>
 
                 <dependency>
@@ -578,12 +598,22 @@
 
                 <dependency>
                     <groupId>org.apache.httpcomponents</groupId>
+                    <artifactId>httpasyncclient</artifactId>
+                </dependency>
+
+                <dependency>
+                    <groupId>org.apache.httpcomponents</groupId>
                     <artifactId>httpclient</artifactId>
                 </dependency>
 
                 <dependency>
                     <groupId>org.apache.httpcomponents</groupId>
                     <artifactId>httpcore</artifactId>
+                </dependency>
+
+                <dependency>
+                    <groupId>org.apache.httpcomponents</groupId>
+                    <artifactId>httpcore-nio</artifactId>
                 </dependency>
 
                 <dependency>
@@ -649,8 +679,33 @@
                 </dependency>
 
                 <dependency>
-                    <groupId>org.apache.ws.security</groupId>
-                    <artifactId>wss4j</artifactId>
+                    <groupId>org.apache.wss4j</groupId>
+                    <artifactId>wss4j-bindings</artifactId>
+                </dependency>
+
+                <dependency>
+                    <groupId>org.apache.wss4j</groupId>
+                    <artifactId>wss4j-policy</artifactId>
+                </dependency>
+
+                <dependency>
+                    <groupId>org.apache.wss4j</groupId>
+                    <artifactId>wss4j-ws-security-common</artifactId>
+                </dependency>
+
+                <dependency>
+                    <groupId>org.apache.wss4j</groupId>
+                    <artifactId>wss4j-ws-security-dom</artifactId>
+                </dependency>
+
+                <dependency>
+                    <groupId>org.apache.wss4j</groupId>
+                    <artifactId>wss4j-ws-security-policy-stax</artifactId>
+                </dependency>
+
+                <dependency>
+                    <groupId>org.apache.wss4j</groupId>
+                    <artifactId>wss4j-ws-security-stax</artifactId>
                 </dependency>
 
                 <dependency>
@@ -878,6 +933,11 @@
                 <dependency>
                     <groupId>org.infinispan</groupId>
                     <artifactId>infinispan-query-dsl</artifactId>
+                </dependency>
+
+                <dependency>
+                    <groupId>org.jasypt</groupId>
+                    <artifactId>jasypt</artifactId>
                 </dependency>
 
                 <dependency>
@@ -1873,7 +1933,7 @@
                 <dependency>
                     <groupId>org.jboss.ws.cxf</groupId>
                     <artifactId>jbossws-cxf-resources</artifactId>
-                    <classifier>wildfly800</classifier>
+                    <classifier>wildfly821</classifier>
                 </dependency>
 
                 <dependency>

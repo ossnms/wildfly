@@ -105,12 +105,12 @@ public final class WSIntegrationProcessorJAXWS_EJB implements DeploymentUnitProc
                 final String authMethod = webCtx.getAuthMethod();
                 final boolean isSecureWsdlAccess = webCtx.isSecureWsdlAccess();
                 final String transportGuarantee = webCtx.getTransportGuarantee();
-
+                final String realmName = webCtx.getRealmName();
                 for (final SessionBeanComponentDescription sessionBean : sessionBeans) {
                     if (sessionBean.isStateless() || sessionBean.isSingleton()) {
                         final EJBViewDescription ejbViewDescription = sessionBean.addWebserviceEndpointView();
                         final ServiceName ejbViewName = ejbViewDescription.getServiceName();
-                        jaxwsDeployment.addEndpoint(new EJBEndpoint(sessionBean, ejbViewName, securityRoles, authMethod, isSecureWsdlAccess, transportGuarantee));
+                        jaxwsDeployment.addEndpoint(new EJBEndpoint(sessionBean, ejbViewName, securityRoles, authMethod, realmName, isSecureWsdlAccess, transportGuarantee));
                     }
                 }
             }
@@ -179,23 +179,30 @@ public final class WSIntegrationProcessorJAXWS_EJB implements DeploymentUnitProc
 
         // process @PermitAll annotation
         if (webServiceClassInfo.annotations().containsKey(PERMIT_ALL_ANNOTATION)) {
-            final AnnotationInstance permitAll = webServiceClassInfo.annotations().get(PERMIT_ALL_ANNOTATION).iterator().next();
-            if (permitAll.target().equals(webServiceClassInfo)) {
-                securityRoles.add("*");
+            for (AnnotationInstance permitAll : webServiceClassInfo.annotations().get(PERMIT_ALL_ANNOTATION)) {
+                if (permitAll.target().equals(webServiceClassInfo)) {
+                    securityRoles.add("*");
+                    break;
+                }
             }
         }
-
-        return (securityRoles.size() > 0) ? Collections.unmodifiableSet(securityRoles) : Collections.<String>emptySet();
+        //if there is no class level security annotation, it will delegate to ejb's security check
+        if (securityRoles.isEmpty()) {
+            securityRoles.add("*");
+        }
+        return Collections.unmodifiableSet(securityRoles);
     }
+
 
     private static final class WebContextAnnotationWrapper {
         private final String authMethod;
         private final String transportGuarantee;
         private final boolean secureWsdlAccess;
-
+        private final String realmName;
         WebContextAnnotationWrapper(final AnnotationInstance annotation) {
             authMethod = stringValueOrNull(annotation, "authMethod");
             transportGuarantee = stringValueOrNull(annotation, "transportGuarantee");
+            realmName = stringValueOrNull(annotation, "realmName");
             secureWsdlAccess = booleanValue(annotation, "secureWSDLAccess");
         }
 
@@ -209,6 +216,10 @@ public final class WSIntegrationProcessorJAXWS_EJB implements DeploymentUnitProc
 
         boolean isSecureWsdlAccess() {
             return secureWsdlAccess;
+        }
+
+        String getRealmName() {
+            return realmName;
         }
 
         private String stringValueOrNull(final AnnotationInstance annotation, final String attribute) {

@@ -36,6 +36,7 @@ import org.jboss.as.server.deployment.DeploymentUnit;
 import org.jboss.as.server.deployment.DeploymentUnitProcessingException;
 import org.jboss.as.server.deployment.DeploymentUnitProcessor;
 import org.jboss.as.server.deployment.annotation.CompositeIndex;
+
 /**
  * @author <a href="mailto:ema@redhat.com">Jim Ma</a>
  */
@@ -52,17 +53,19 @@ public class WebServiceAnnotationProcessor implements DeploymentUnitProcessor {
         this.factories = Collections.unmodifiableList(factories);
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final void deploy(final DeploymentPhaseContext phaseContext) throws DeploymentUnitProcessingException {
         final DeploymentUnit deploymentUnit = phaseContext.getDeploymentUnit();
 
         final EEModuleDescription eeModuleDescription = deploymentUnit.getAttachment(Attachments.EE_MODULE_DESCRIPTION);
         final CompositeIndex index = deploymentUnit.getAttachment(org.jboss.as.server.deployment.Attachments.COMPOSITE_ANNOTATION_INDEX);
+        final Boolean replacement = deploymentUnit.getAttachment(org.jboss.as.ee.structure.Attachments.ANNOTATION_PROPERTY_REPLACEMENT);
         if (index == null || eeModuleDescription == null) {
             return;
         }
 
         for (final ClassAnnotationInformationFactory factory : factories) {
-            final Map<String, ClassAnnotationInformation<?, ?>> data = factory.createAnnotationInformation(index, false);
+            final Map<String, ClassAnnotationInformation<?, ?>> data = factory.createAnnotationInformation(index, replacement);
             for (Map.Entry<String, ClassAnnotationInformation<?, ?>> entry : data.entrySet()) {
                 EEModuleClassDescription clazz = eeModuleDescription.addOrGetLocalClassDescription(entry.getKey());
                 clazz.addAnnotationInformation(entry.getValue());
