@@ -24,12 +24,6 @@
 
 package org.wildfly.extension.undertow;
 
-import static org.jboss.as.controller.PersistentResourceXMLDescription.builder;
-
-import java.util.List;
-import javax.xml.stream.XMLStreamConstants;
-import javax.xml.stream.XMLStreamException;
-
 import org.jboss.as.controller.PathAddress;
 import org.jboss.as.controller.PersistentResourceXMLDescription;
 import org.jboss.as.controller.operations.common.Util;
@@ -39,10 +33,10 @@ import org.jboss.staxmapper.XMLElementReader;
 import org.jboss.staxmapper.XMLElementWriter;
 import org.jboss.staxmapper.XMLExtendedStreamReader;
 import org.jboss.staxmapper.XMLExtendedStreamWriter;
-import org.wildfly.extension.undertow.filters.CustomFilterDefinition;
-import org.wildfly.extension.undertow.filters.ErrorPageDefinition;
 import org.wildfly.extension.undertow.filters.BasicAuthHandler;
 import org.wildfly.extension.undertow.filters.ConnectionLimitHandler;
+import org.wildfly.extension.undertow.filters.CustomFilterDefinition;
+import org.wildfly.extension.undertow.filters.ErrorPageDefinition;
 import org.wildfly.extension.undertow.filters.FilterDefinitions;
 import org.wildfly.extension.undertow.filters.FilterRefDefinition;
 import org.wildfly.extension.undertow.filters.GzipFilter;
@@ -51,6 +45,12 @@ import org.wildfly.extension.undertow.handlers.FileHandler;
 import org.wildfly.extension.undertow.handlers.HandlerDefinitions;
 import org.wildfly.extension.undertow.handlers.ReverseProxyHandler;
 import org.wildfly.extension.undertow.handlers.ReverseProxyHandlerHost;
+
+import javax.xml.stream.XMLStreamConstants;
+import javax.xml.stream.XMLStreamException;
+import java.util.List;
+
+import static org.jboss.as.controller.PersistentResourceXMLDescription.builder;
 
 /**
  * @author <a href="mailto:tomaz.cerar@redhat.com">Tomaz Cerar</a> (c) 2012 Red Hat Inc.
@@ -204,7 +204,7 @@ public class UndertowSubsystemParser_1_2 implements XMLStreamConstants, XMLEleme
                                                         ReverseProxyHandler.MAX_REQUEST_TIME)
                                                 .addChild(builder(ReverseProxyHandlerHost.INSTANCE)
                                                         .setXmlElementName(Constants.HOST)
-                                                        .addAttributes(ReverseProxyHandlerHost.INSTANCE_ID, ReverseProxyHandlerHost.PATH, ReverseProxyHandlerHost.SCHEME, ReverseProxyHandlerHost.OUTBOUND_SOCKET_BINDING))
+                                                        .addAttributes(ReverseProxyHandlerHost.INSTANCE_ID, ReverseProxyHandlerHost.PATH, ReverseProxyHandlerHost.SCHEME, ReverseProxyHandlerHost.OUTBOUND_SOCKET_BINDING, ReverseProxyHandlerHost.SECURITY_REALM))
                                 )
 
 

@@ -22,12 +22,6 @@
 
 package org.wildfly.extension.undertow.handlers;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-
 import io.undertow.server.handlers.proxy.LoadBalancingProxyClient;
 import io.undertow.server.handlers.proxy.ProxyHandler;
 import org.jboss.as.controller.AbstractAddStepHandler;
@@ -43,9 +37,11 @@ import org.jboss.as.controller.SimpleAttributeDefinition;
 import org.jboss.as.controller.SimpleAttributeDefinitionBuilder;
 import org.jboss.as.controller.access.management.SensitiveTargetAccessConstraintDefinition;
 import org.jboss.as.controller.descriptions.ModelDescriptionConstants;
+import org.jboss.as.controller.operations.validation.StringLengthValidator;
 import org.jboss.as.controller.registry.AttributeAccess;
 import org.jboss.as.controller.registry.ManagementResourceRegistration;
 import org.jboss.as.controller.registry.OperationEntry;
+import org.jboss.as.domain.management.SecurityRealm;
 import org.jboss.as.network.OutboundSocketBinding;
 import org.jboss.dmr.ModelNode;
 import org.jboss.dmr.ModelType;
@@ -60,6 +56,18 @@ import org.jboss.msc.value.InjectedValue;
 import org.wildfly.extension.undertow.Constants;
 import org.wildfly.extension.undertow.UndertowExtension;
 import org.wildfly.extension.undertow.UndertowService;
+import org.xnio.OptionMap;
+import org.xnio.Options;
+import org.xnio.Xnio;
+import org.xnio.ssl.JsseXnioSsl;
+import org.xnio.ssl.XnioSsl;
+
+import javax.net.ssl.SSLContext;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Stuart Douglas
@@ -95,6 +103,11 @@ public class ReverseProxyHandlerHost extends PersistentResourceDefinition {
             .setAllowExpression(true)
             .build();
 
+    public static final AttributeDefinition SECURITY_REALM = new SimpleAttributeDefinitionBuilder(Constants.SECURITY_REALM, ModelType.STRING)
+            .setAllowNull(true)
+            .setFlags(AttributeAccess.Flag.RESTART_ALL_SERVICES)
+            .setValidator(new StringLengthValidator(1))
+            .build();
 
     private ReverseProxyHandlerHost() {
         super(PathElement.pathElement(Constants.HOST), UndertowExtension.getResolver(Constants.HANDLER, Constants.REVERSE_PROXY, Constants.HOST));
@@ -102,7 +115,7 @@ public class ReverseProxyHandlerHost extends PersistentResourceDefinition {
 
     @Override
     public Collection<AttributeDefinition> getAttributes() {
-        return Arrays.asList(OUTBOUND_SOCKET_BINDING, SCHEME, INSTANCE_ID, PATH);
+        return Arrays.asList(OUTBOUND_SOCKET_BINDING, SCHEME, INSTANCE_ID, PATH, SECURITY_REALM);
     }
 
 
@@ -140,6 +153,8 @@ public class ReverseProxyHandlerHost extends PersistentResourceDefinition {
             final String scheme = SCHEME.resolveModelAttribute(context, model).asString();
             final String path = PATH.resolveModelAttribute(context, model).asString();
             final String jvmRoute;
+            final ModelNode securityRealm = SECURITY_REALM.resolveModelAttribute(context, model);
+
             if (model.hasDefined(Constants.INSTANCE_ID)) {
                 jvmRoute = INSTANCE_ID.resolveModelAttribute(context, model).asString();
             } else {
@@ -149,6 +164,10 @@ public class ReverseProxyHandlerHost extends PersistentResourceDefinition {
             ServiceBuilder<ReverseProxyHostService> builder = context.getServiceTarget().addService(SERVICE_NAME.append(proxyName).append(name), service)
                     .addDependency(UndertowService.HANDLER.append(proxyName), ProxyHandler.class, service.proxyHandler)
                     .addDependency(OutboundSocketBinding.OUTBOUND_SOCKET_BINDING_BASE_SERVICE_NAME.append(socketBinding), OutboundSocketBinding.class, service.socketBinding);
+
+            if(securityRealm.isDefined()) {
+                SecurityRealm.ServiceUtil.addDependency(builder, service.securityRealm, securityRealm.asString(), false);
+            }
 
             if (verificationHandler != null) {
                 builder.addListener(verificationHandler);
@@ -164,6 +183,7 @@ public class ReverseProxyHandlerHost extends PersistentResourceDefinition {
 
         private final InjectedValue<ProxyHandler> proxyHandler = new InjectedValue<>();
         private final InjectedValue<OutboundSocketBinding> socketBinding = new InjectedValue<>();
+        private final InjectedValue<SecurityRealm> securityRealm = new InjectedValue<>();
 
         private final String instanceId;
         private final String scheme;
@@ -174,6 +194,7 @@ public class ReverseProxyHandlerHost extends PersistentResourceDefinition {
             this.scheme = scheme;
             this.path = path;
         }
+
         private URI getUri() throws URISyntaxException {
             OutboundSocketBinding binding = socketBinding.getValue();
             return new URI(scheme, null, binding.getUnresolvedDestinationAddress(), binding.getDestinationPort(), path, null, null);
@@ -184,7 +205,17 @@ public class ReverseProxyHandlerHost extends PersistentResourceDefinition {
             final LoadBalancingProxyClient client = (LoadBalancingProxyClient) proxyHandler.getValue().getProxyClient();
 
             try {
-                client.addHost(getUri(), instanceId);
+                if(securityRealm.getOptionalValue() == null) {
+                    client.addHost(getUri(), instanceId);
+                } else {
+                    SSLContext sslContext = securityRealm.getOptionalValue().getSSLContext();
+                    OptionMap.Builder builder = OptionMap.builder();
+                    builder.set(Options.USE_DIRECT_BUFFERS, true);
+                    OptionMap combined = builder.getMap();
+
+                    XnioSsl xnioSsl = new JsseXnioSsl(Xnio.getInstance(), combined, sslContext);
+                    client.addHost(getUri(), instanceId, xnioSsl);
+                }
             } catch (URISyntaxException e) {
                 throw new StartException(e);
             }
