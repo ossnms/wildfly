@@ -32,12 +32,12 @@
     <parent>
            <groupId>org.wildfly</groupId>
            <artifactId>wildfly-dist-parent</artifactId>
-           <version>8.2.1.Final-ossnms-009</version>
+           <version>8.2.1.Final-ossnms-010</version>
            <relativePath>../pom.xml</relativePath>
        </parent>
 
     <artifactId>wildfly-core</artifactId>
-    <version>8.2.1.Final-ossnms-009</version>
+    <version>8.2.1.Final-ossnms-010</version>
 
     <name>WildFly: Core Distribution</name>
     <packaging>pom</packaging>

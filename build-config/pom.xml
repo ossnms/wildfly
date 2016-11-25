@@ -36,7 +36,7 @@
     <groupId>org.wildfly</groupId>
     <artifactId>wildfly-build-config</artifactId>
     <name>WildFly: Build Configuration</name>
-    <version>8.2.1.Final-ossnms-009</version>
+    <version>8.2.1.Final-ossnms-010</version>
 
     <licenses>
         <license>

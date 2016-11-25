@@ -29,7 +29,7 @@
     <parent>
         <groupId>org.wildfly</groupId>
         <artifactId>wildfly-clustering</artifactId>
-        <version>8.2.1.Final-ossnms-009</version>
+        <version>8.2.1.Final-ossnms-010</version>
     </parent>
 
     <artifactId>wildfly-clustering-common</artifactId>
