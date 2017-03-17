@@ -29,7 +29,7 @@
     <parent>
         <artifactId>wildfly-testsuite</artifactId>
         <groupId>org.wildfly</groupId>
-        <version>9.0.2.Final-ossnms-005</version>
+        <version>9.0.2.Final-ossnms-006</version>
     </parent>
 
     <artifactId>wildfly-testsuite-compat</artifactId>
