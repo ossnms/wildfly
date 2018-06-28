@@ -617,7 +617,7 @@ public class TimerServiceImpl implements TimerService, Service<TimerService> {
     }
 
     public void cancelTimer(final TimerImpl timer) {
-        timer.lock();
+        Object token = timer.lock();
         boolean release = true;
         try {
             // first check whether the timer has expired or has been cancelled
@@ -627,7 +627,7 @@ public class TimerServiceImpl implements TimerService, Service<TimerService> {
                 timer.setTimerState(TimerState.CANCELED);
             }
             if (transactionActive() && !startedInTx) {
-                registerSynchronization(new TimerRemoveSynchronization(timer));
+                registerSynchronization(new TimerRemoveSynchronization(timer, token));
                 release = false;
             } else {
                 // cancel any scheduled Future for this timer
@@ -639,7 +639,7 @@ public class TimerServiceImpl implements TimerService, Service<TimerService> {
             persistTimer(timer, false);
         } finally {
             if (release) {
-                timer.unlock();
+                timer.unlock(token);
             }
         }
     }
@@ -1159,9 +1159,11 @@ public class TimerServiceImpl implements TimerService, Service<TimerService> {
     private class TimerRemoveSynchronization implements Synchronization {
 
         private final TimerImpl timer;
+        private final Object token;
 
-        private TimerRemoveSynchronization(final TimerImpl timer) {
+        private TimerRemoveSynchronization(final TimerImpl timer, Object token) {
             this.timer = timer;
+            this.token = token;
         }
 
         @Override
@@ -1180,7 +1182,7 @@ public class TimerServiceImpl implements TimerService, Service<TimerService> {
                     timer.setTimerState(TimerState.ACTIVE);
                 }
             } finally {
-                timer.unlock();
+                timer.unlock(token);
             }
         }
     }

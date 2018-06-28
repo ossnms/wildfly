@@ -21,19 +21,19 @@
  */
 package org.jboss.as.ejb3.timerservice;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.concurrent.locks.ReentrantLock;
+import org.jboss.as.ejb3.component.allowedmethods.AllowedMethodsInformation;
+import org.jboss.as.ejb3.component.allowedmethods.MethodType;
+import org.jboss.as.ejb3.logging.EjbLogger;
+import org.jboss.as.ejb3.timerservice.spi.TimedObjectInvoker;
 
 import javax.ejb.EJBException;
 import javax.ejb.ScheduleExpression;
 import javax.ejb.Timer;
 import javax.ejb.TimerHandle;
-
-import org.jboss.as.ejb3.logging.EjbLogger;
-import org.jboss.as.ejb3.component.allowedmethods.AllowedMethodsInformation;
-import org.jboss.as.ejb3.component.allowedmethods.MethodType;
-import org.jboss.as.ejb3.timerservice.spi.TimedObjectInvoker;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Implementation of EJB3.1 {@link Timer}
@@ -118,6 +118,9 @@ public class TimerImpl implements Timer {
      * todo: we can probably just use a sync block here
      */
     private final ReentrantLock inUseLock = new ReentrantLock();
+    private final Condition inUseCondition = inUseLock.newCondition();
+    private transient Thread inUseOwner = null;
+    private transient int inUseCounter = 0;
 
     /**
      * Creates a {@link TimerImpl}
@@ -515,12 +518,42 @@ public class TimerImpl implements Timer {
         return new TimerTask<TimerImpl>(this);
     }
 
-    public void lock() {
+    public Object lock() {
+
         inUseLock.lock();
+        try {
+            Thread currentThread = Thread.currentThread();
+            while (inUseOwner != null && inUseOwner != currentThread) {
+                inUseCondition.awaitUninterruptibly();
+            }
+            inUseOwner = currentThread;
+            inUseCounter++;
+            return currentThread;
+        }finally {
+            inUseLock.unlock();
+        }
+
     }
 
     public void unlock() {
-        inUseLock.unlock();
+        unlock(Thread.currentThread());
+    }
+
+    public void unlock(Object token) {
+        inUseLock.lock();
+        try {
+            if (token != inUseOwner) {
+                throw new IllegalMonitorStateException("Not the owner");
+            }
+            inUseCounter--;
+            if (inUseCounter == 0) {
+                inUseOwner = null;
+                inUseCondition.signal();
+            }
+
+        }finally {
+            inUseLock.unlock();
+        }
     }
 
     /**
