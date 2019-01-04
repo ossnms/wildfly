@@ -130,11 +130,13 @@ public final class EjbValidationsUtil {
     }
 
     public static boolean verifyMethodIsNotFinalNorStatic(Method method, String classname) {
-        boolean isMethodCompliant = true;
-        if (Modifier.isStatic(method.getModifiers()) || Modifier.isFinal(method.getModifiers())) {
+
+        final boolean isMethodCompliant = method.isSynthetic() || !Modifier.isStatic(method.getModifiers()) && !Modifier.isFinal(method.getModifiers());
+
+        if (!isMethodCompliant) {
             EjbLogger.ROOT_LOGGER.ejbMethodMustNotBeFinalNorStatic(classname, method.getName());
-            isMethodCompliant = false;
         }
+
         return isMethodCompliant;
     }
 
