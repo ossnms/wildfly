@@ -191,7 +191,8 @@
                     <xs:attribute name="sync-transactional" type="xs:boolean" />
                     <xs:attribute name="sync-non-transactional" type="xs:boolean" />
                     <xs:attribute name="log-write-rate" type="xs:boolean" />
-                    <xs:attribute name="file-size" type="xs:long" />
+                    <xs:attribute name="file-size" type="xs:long"/>
+                    <xs:attribute name="file-open-timeout" type="xs:int" />
                     <xs:attribute name="min-files" type="xs:int" />
                     <xs:attribute name="pool-files" type="xs:int" />
                     <xs:attribute name="compact-percentage" type="xs:int" />

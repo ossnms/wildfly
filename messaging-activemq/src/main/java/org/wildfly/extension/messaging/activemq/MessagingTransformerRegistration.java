@@ -125,6 +125,7 @@ public class MessagingTransformerRegistration implements ExtensionTransformerReg
                 .addRejectCheck(RejectAttributeChecker.DEFINED, DiscoveryGroupDefinition.JGROUPS_CHANNEL)
                 .addRename(CommonAttributes.JGROUPS_CLUSTER, CommonAttributes.JGROUPS_CHANNEL.getName())
                 .end();
+        rejectDefinedAttributeWithDefaultValue(server, ServerDefinition.JOURNAL_FILE_OPEN_TIMEOUT);
     }
 
     static class JGroupsChannelDiscardAttributeChecker implements DiscardAttributeChecker {
@@ -168,7 +169,8 @@ public class MessagingTransformerRegistration implements ExtensionTransformerReg
                 ServerDefinition.JOURNAL_LARGE_MESSAGES_TABLE,
                 ServerDefinition.JOURNAL_PAGE_STORE_TABLE,
                 ServerDefinition.JOURNAL_DATABASE,
-                ServerDefinition.JOURNAL_JDBC_NETWORK_TIMEOUT
+                ServerDefinition.JOURNAL_JDBC_NETWORK_TIMEOUT,
+                ServerDefinition.JOURNAL_FILE_OPEN_TIMEOUT
                 );
         server.getAttributeBuilder()
                     .setDiscard(DiscardAttributeChecker.ALWAYS, ServerDefinition.CREDENTIAL_REFERENCE)
