@@ -33,7 +33,7 @@
         Maintain separation between the artifact id and the version to help prevent
         merge conflicts between commits changing the GA and those changing the V.
         -->
-        <version>15.0.1.Final-ossnms-005</version>
+        <version>15.0.1.Final-ossnms-006</version>
     </parent>
 
     <artifactId>wildfly-sar</artifactId>

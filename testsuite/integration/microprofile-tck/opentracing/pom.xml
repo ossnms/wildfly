@@ -28,7 +28,7 @@
     <parent>
         <groupId>org.wildfly</groupId>
         <artifactId>wildfly-ts-integ-mp</artifactId>
-        <version>15.0.1.Final-ossnms-005</version>
+        <version>15.0.1.Final-ossnms-006</version>
     </parent>
 
     <artifactId>wildfly-ts-integ-mp-opentracing</artifactId>
