@@ -35,6 +35,5 @@
         <module name="javax.api"/>
         <module name="sun.jdk"/>
         <module name="org.javassist" optional="true"/>
-        <module name="org.slf4j"/>
     </dependencies>
 </module>
