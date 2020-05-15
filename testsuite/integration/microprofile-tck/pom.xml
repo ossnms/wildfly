@@ -28,7 +28,7 @@
     <parent>
         <groupId>org.wildfly</groupId>
         <artifactId>wildfly-ts-integ</artifactId>
-        <version>19.1.0.Final</version>
+        <version>19.1.0.Final-ossnms-1</version>
     </parent>
 
     <artifactId>wildfly-ts-integ-mp</artifactId>
