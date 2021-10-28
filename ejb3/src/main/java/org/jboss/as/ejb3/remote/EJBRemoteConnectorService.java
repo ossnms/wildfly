@@ -21,9 +21,6 @@
  */
 package org.jboss.as.ejb3.remote;
 
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-
 import org.jboss.as.remoting.RemotingConnectorBindingInfoService;
 import org.jboss.ejb.protocol.remote.RemoteEJBService;
 import org.jboss.msc.service.Service;
@@ -38,6 +35,10 @@ import org.jboss.remoting3.Registration;
 import org.jboss.remoting3.ServiceRegistrationException;
 import org.wildfly.transaction.client.provider.remoting.RemotingTransactionService;
 import org.xnio.OptionMap;
+
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.function.Function;
 
 /**
  * @author <a href="mailto:cdewolf@redhat.com">Carlo de Wolf</a>
@@ -56,13 +57,12 @@ public class EJBRemoteConnectorService implements Service<Void> {
     private final InjectedValue<RemotingTransactionService> remotingTransactionServiceInjectedValue = new InjectedValue<>();
     private volatile Registration registration;
     private final OptionMap channelCreationOptions;
+    private final Function<String, Boolean> classResolverFilter;
 
-    public EJBRemoteConnectorService() {
-        this(OptionMap.EMPTY);
-    }
-
-    public EJBRemoteConnectorService(final OptionMap channelCreationOptions) {
+    public EJBRemoteConnectorService(final OptionMap channelCreationOptions,
+                                     final Function<String, Boolean> classResolverFilter) {
         this.channelCreationOptions = channelCreationOptions;
+        this.classResolverFilter = classResolverFilter;
     }
 
     @Override
@@ -75,7 +75,8 @@ public class EJBRemoteConnectorService implements Service<Void> {
         }
         RemoteEJBService remoteEJBService = RemoteEJBService.create(
             associationService.getAssociation(),
-            remotingTransactionServiceInjectedValue.getValue()
+            remotingTransactionServiceInjectedValue.getValue(),
+            classResolverFilter
         );
         remoteEJBService.serverUp();
 
