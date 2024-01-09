@@ -32,9 +32,13 @@ import org.jboss.as.server.deployment.DeploymentUnitProcessingException;
 import org.jboss.as.server.deployment.DeploymentUnitProcessor;
 import org.jboss.as.weld.WeldCapability;
 import org.jboss.modules.Module;
+import org.jboss.msc.service.ServiceBuilder;
 import org.wildfly.extension.microprofile.health.MicroProfileHealthReporter;
 import org.wildfly.extension.microprofile.health.MicroProfileHealthSubsystemDefinition;
 import org.wildfly.extension.microprofile.health._private.MicroProfileHealthLogger;
+
+import javax.enterprise.inject.spi.BeanManager;
+import java.util.function.Supplier;
 
 /**
  */
@@ -56,10 +60,14 @@ public class DeploymentProcessor implements DeploymentUnitProcessor {
                     deploymentUnit.getName(),
                     WELD_CAPABILITY_NAME);
         }
-        if (weldCapability.isPartOfWeldDeployment(deploymentUnit)) {
+        if (weldCapability.isPartOfWeldDeployment(deploymentUnit) && deploymentUnit.getParent() == null) {
             final MicroProfileHealthReporter healthReporter = (MicroProfileHealthReporter) phaseContext.getServiceRegistry().getService(MicroProfileHealthSubsystemDefinition.HEALTH_REPORTER_SERVICE).getValue();
 
-            weldCapability.registerExtensionInstance(new CDIExtension(healthReporter, module), deploymentUnit);
+            ServiceBuilder<?> serviceBuilder = phaseContext.getServiceTarget().addService(phaseContext.getPhaseServiceName().append("beanMangerSupplier"));
+            Supplier<BeanManager> beanMangerSupplier = weldCapability.addBeanManagerService(deploymentUnit, serviceBuilder);
+            serviceBuilder.install();
+
+            weldCapability.registerExtensionInstance(new CDIExtension(healthReporter, module, beanMangerSupplier), deploymentUnit);
         }
 
     }
