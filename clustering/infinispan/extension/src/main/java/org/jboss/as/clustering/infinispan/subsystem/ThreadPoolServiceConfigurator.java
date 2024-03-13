@@ -65,7 +65,7 @@ public class ThreadPoolServiceConfigurator extends GlobalComponentServiceConfigu
         }
 
         @Override
-        public ManageableThreadPoolExecutorService createExecutor(ThreadFactory factory) {
+        public ExecutorService createExecutor(ThreadFactory factory) {
             return super.createExecutor(new DefaultThreadFactory(factory));
         }
     }
