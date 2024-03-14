@@ -18,8 +18,6 @@ import java.util.function.UnaryOperator;
 
 import javax.management.ObjectName;
 
-import jakarta.transaction.TransactionManager;
-
 import org.infinispan.client.hotrod.CacheTopologyInfo;
 import org.infinispan.client.hotrod.DataFormat;
 import org.infinispan.client.hotrod.Flag;
@@ -44,6 +42,8 @@ import org.reactivestreams.Publisher;
 import org.wildfly.clustering.Registrar;
 import org.wildfly.clustering.Registration;
 import org.wildfly.clustering.infinispan.client.RemoteCacheContainer;
+
+import jakarta.transaction.TransactionManager;
 
 /**
  * {@link RemoteCache} decorator that handles registration on {@link #start()} and deregistration on {@link #stop()}.
@@ -390,11 +390,6 @@ public class ManagedRemoteCache<K, V> extends RemoteCacheSupport<K, V> implement
     @Override
     public boolean isObjectStorage() {
         return this.cache.isObjectStorage();
-    }
-
-    @Override
-    public K keyAsObjectIfNeeded(Object key) {
-        return this.cache.keyAsObjectIfNeeded(key);
     }
 
     @Override

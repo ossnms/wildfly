@@ -109,7 +109,19 @@
                                     <groupId>org.jboss.ejb3</groupId>
                                     <artifactId>jboss-ejb3-ext-api</artifactId>
                                 </dependency>
+                                <dependency>
+                                    <groupId>commons-codec</groupId>
+                                    <artifactId>commons-codec</artifactId>
+                                    <version>${version.commons-codec}</version>
+                                </dependency>
                             </includeDependencies>
+                            <versionRefDependencies>
+                                <dependency>
+                                    <groupId>commons-codec</groupId>
+                                    <artifactId>commons-codec</artifactId>
+                                    <version>commons-codec:commons-codec:jar</version>
+                                </dependency>
+                            </versionRefDependencies>
                         </configuration>
                     </execution>
                 </executions>
