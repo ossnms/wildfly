@@ -365,7 +365,7 @@
         <version.antlr>4.10</version.antlr>
         <version.com.carrotsearch.hppc>0.8.1</version.com.carrotsearch.hppc>
         <version.com.fasterxml.classmate>1.5.1</version.com.fasterxml.classmate>
-        <version.com.fasterxml.jackson>2.15.2</version.com.fasterxml.jackson>
+        <version.com.fasterxml.jackson>2.16.2</version.com.fasterxml.jackson>
         <version.com.fasterxml.jackson.databind>${version.com.fasterxml.jackson}</version.com.fasterxml.jackson.databind>
         <version.com.fasterxml.jackson.jr.jackson-jr-objects>${version.com.fasterxml.jackson}</version.com.fasterxml.jackson.jr.jackson-jr-objects>
         <version.com.github.ben-manes.caffeine>3.1.8</version.com.github.ben-manes.caffeine>
@@ -378,7 +378,7 @@
         <version.com.google.guava>32.1.2-jre</version.com.google.guava>
         <version.com.google.guava.failureaccess>1.0.1</version.com.google.guava.failureaccess>
         <version.com.google.protobuf>3.19.6</version.com.google.protobuf>
-        <version.com.h2database>2.2.220</version.com.h2database>
+        <version.com.h2database>2.2.224</version.com.h2database>
         <version.com.ibm.async.asyncutil>0.1.0</version.com.ibm.async.asyncutil>
         <version.com.microsoft.azure>8.6.6</version.com.microsoft.azure>
         <version.com.nimbus.jose-jwt>9.31</version.com.nimbus.jose-jwt>
@@ -390,7 +390,7 @@
         <version.com.sun.xml.fastinfoset>2.1.0</version.com.sun.xml.fastinfoset>
         <version.com.sun.xml.messaging.saaj>3.0.0</version.com.sun.xml.messaging.saaj>
         <version.commons-beanutils>1.9.4</version.commons-beanutils>
-        <version.commons-codec>1.15</version.commons-codec>
+        <version.commons-codec>1.16.1</version.commons-codec>
         <version.commons-collections>3.2.2</version.commons-collections>
         <version.commons-io>2.11.0</version.commons-io>
         <version.gnu.getopt>1.0.13</version.gnu.getopt>
@@ -494,7 +494,7 @@
         <version.org.hibernate.search>6.2.2.Final</version.org.hibernate.search>
         <version.org.hibernate.validator>8.0.1.Final</version.org.hibernate.validator>
         <version.org.hornetq>2.4.9.Final</version.org.hornetq>
-        <version.org.infinispan>14.0.20.Final</version.org.infinispan>
+        <version.org.infinispan>14.0.24.Final</version.org.infinispan>
         <version.org.infinispan.protostream>4.6.5.Final</version.org.infinispan.protostream>
         <version.org.jasypt>1.9.3</version.org.jasypt>
         <version.org.jberet>2.1.2.Final</version.org.jberet>
