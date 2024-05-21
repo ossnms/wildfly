@@ -396,7 +396,7 @@
         <version.gnu.getopt>1.0.13</version.gnu.getopt>
         <version.io.agroal>2.0</version.io.agroal>
         <version.io.micrometer>1.9.13</version.io.micrometer>
-        <version.io.netty>4.1.100.Final</version.io.netty>
+        <version.io.netty>4.1.108.Final-ossnms-1</version.io.netty>
         <version.io.opentelemetry.opentelemetry>1.20.0</version.io.opentelemetry.opentelemetry>
         <version.io.opentelemetry.proto>0.19.0-alpha</version.io.opentelemetry.proto>
         <version.io.perfmark>0.23.0</version.io.perfmark>
@@ -460,7 +460,7 @@
         <version.org.apache.velocity>2.3</version.org.apache.velocity>
         <version.org.apache.wss4j>3.0.1</version.org.apache.wss4j>
         <version.org.apache.ws.xmlschema>2.3.0</version.org.apache.ws.xmlschema>
-        <version.org.apache.xerces>2.12.0.SP05</version.org.apache.xerces>
+        <version.org.apache.xerces>2.12.2</version.org.apache.xerces>
         <version.org.bitbucket.jose4j>0.9.3</version.org.bitbucket.jose4j>
         <version.org.bytebuddy>1.14.7</version.org.bytebuddy>
         <version.org.codehaus.woodstox.stax2-api>4.2.1</version.org.codehaus.woodstox.stax2-api>
