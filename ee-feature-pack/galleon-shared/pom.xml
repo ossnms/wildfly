@@ -416,21 +416,23 @@
             <groupId>io.netty</groupId>
             <artifactId>netty-transport-classes-kqueue</artifactId>
         </dependency>
-        <dependency>
+        <!-- there no *-aarch_64 artifacts for the ossnms versions of netty  -->
+<!--        <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-transport-native-epoll</artifactId>
             <classifier>linux-aarch_64</classifier>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-transport-native-epoll</artifactId>
             <classifier>linux-x86_64</classifier>
         </dependency>
-        <dependency>
+        <!-- there no *-aarch_64 artifacts for the ossnms versions of netty  -->
+<!--        <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-transport-native-kqueue</artifactId>
             <classifier>osx-aarch_64</classifier>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-transport-native-kqueue</artifactId>
@@ -440,21 +442,23 @@
             <groupId>io.netty</groupId>
             <artifactId>netty-transport-native-unix-common</artifactId>
         </dependency>
-        <dependency>
+        <!-- there no *-aarch_64 artifacts for the ossnms versions of netty  -->
+<!--        <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-transport-native-unix-common</artifactId>
             <classifier>linux-aarch_64</classifier>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-transport-native-unix-common</artifactId>
             <classifier>linux-x86_64</classifier>
         </dependency>
-        <dependency>
+        <!-- there no *-aarch_64 artifacts for the ossnms versions of netty  -->
+<!--        <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-transport-native-unix-common</artifactId>
             <classifier>osx-aarch_64</classifier>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-transport-native-unix-common</artifactId>
