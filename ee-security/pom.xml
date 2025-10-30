@@ -16,7 +16,7 @@
         Maintain separation between the artifact id and the version to help prevent
         merge conflicts between commits changing the GA and those changing the V.
         -->
-        <version>35.0.1.Final-ossnms-7</version>
+        <version>35.0.1.Final-ossnms-8-SNAPSHOT</version>
     </parent>
 
     <artifactId>wildfly-ee-security</artifactId>
