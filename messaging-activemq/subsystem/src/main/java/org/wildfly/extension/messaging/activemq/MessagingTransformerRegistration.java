@@ -58,12 +58,23 @@ public class MessagingTransformerRegistration implements ExtensionTransformerReg
     @Override
     public void registerTransformers(SubsystemTransformerRegistration registration) {
         ChainedTransformationDescriptionBuilder builder = TransformationDescriptionBuilder.Factory.createChainedSubystemInstance(registration.getCurrentSubsystemVersion());
+        registerTransformers_WF_36(builder.createBuilder(MessagingExtension.VERSION_16_0_1, MessagingExtension.VERSION_16_0_0));
         registerTransformers_WF_29(builder.createBuilder(MessagingExtension.VERSION_16_0_0, MessagingExtension.VERSION_15_0_0));
         registerTransformers_WF_28(builder.createBuilder(MessagingExtension.VERSION_15_0_0, MessagingExtension.VERSION_14_0_0));
         registerTransformers_WF_27(builder.createBuilder(MessagingExtension.VERSION_14_0_0, MessagingExtension.VERSION_13_1_0));
         registerTransformers_WF_26_1(builder.createBuilder(MessagingExtension.VERSION_13_1_0, MessagingExtension.VERSION_13_0_0));
         builder.buildAndRegister(registration, new ModelVersion[]{MessagingExtension.VERSION_13_0_0, MessagingExtension.VERSION_13_1_0,
             MessagingExtension.VERSION_14_0_0, MessagingExtension.VERSION_15_0_0, MessagingExtension.VERSION_16_0_0});
+    }
+
+    private static void registerTransformers_WF_36(ResourceTransformationDescriptionBuilder subsystem) {
+        ResourceTransformationDescriptionBuilder addressSettings = subsystem.addChildResource(SERVER_PATH)
+                .addChildResource(ADDRESS_SETTING_PATH);
+        rejectDefinedAttributeWithDefaultValue(addressSettings,
+                AddressSettingDefinition.GROUP_BUCKETS,
+                AddressSettingDefinition.GROUP_REBALANCE,
+                AddressSettingDefinition.GROUP_REBALANCE_PAUSE_DISPATCH,
+                AddressSettingDefinition.GROUP_FIRST_KEY);
     }
 
     private static void registerTransformers_WF_29(ResourceTransformationDescriptionBuilder subsystem) {

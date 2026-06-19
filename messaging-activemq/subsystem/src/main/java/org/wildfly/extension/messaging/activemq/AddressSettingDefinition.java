@@ -194,6 +194,29 @@ public class AddressSettingDefinition extends PersistentResourceDefinition {
             .setAllowExpression(true)
             .build();
 
+    public static final SimpleAttributeDefinition GROUP_BUCKETS = create("group-buckets", ModelType.INT)
+            .setDefaultValue(new ModelNode(-1))
+            .setRequired(false)
+            .setAllowExpression(true)
+            .build();
+
+    public static final SimpleAttributeDefinition GROUP_REBALANCE = create("group-rebalance", ModelType.BOOLEAN)
+            .setDefaultValue(ModelNode.FALSE)
+            .setRequired(false)
+            .setAllowExpression(true)
+            .build();
+
+    public static final SimpleAttributeDefinition GROUP_REBALANCE_PAUSE_DISPATCH = create("group-rebalance-pause-dispatch", ModelType.BOOLEAN)
+            .setDefaultValue(ModelNode.FALSE)
+            .setRequired(false)
+            .setAllowExpression(true)
+            .build();
+
+    public static final SimpleAttributeDefinition GROUP_FIRST_KEY = create("group-first-key", ModelType.STRING)
+            .setRequired(false)
+            .setAllowExpression(true)
+            .build();
+
 
     /**
      * Attributes are defined in the <em>same order than in the XSD schema</em>
@@ -224,7 +247,11 @@ public class AddressSettingDefinition extends PersistentResourceDefinition {
             AUTO_DELETE_ADDRESSES,
             AUTO_CREATE_QUEUES,
             AUTO_DELETE_QUEUES,
-            AUTO_DELETE_CREATED_QUEUES
+            AUTO_DELETE_CREATED_QUEUES,
+            GROUP_BUCKETS,
+            GROUP_REBALANCE,
+            GROUP_REBALANCE_PAUSE_DISPATCH,
+            GROUP_FIRST_KEY
     };
 
     AddressSettingDefinition() {

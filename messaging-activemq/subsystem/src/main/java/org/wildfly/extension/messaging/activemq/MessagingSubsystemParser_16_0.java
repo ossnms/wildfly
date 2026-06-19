@@ -388,7 +388,11 @@ public class MessagingSubsystemParser_16_0 extends PersistentResourceXMLParser {
                                                         AddressSettingDefinition.AUTO_DELETE_QUEUES,
                                                         AddressSettingDefinition.AUTO_CREATE_ADDRESSES,
                                                         AddressSettingDefinition.AUTO_DELETE_ADDRESSES,
-                                                        AddressSettingDefinition.AUTO_DELETE_CREATED_QUEUES))
+                                                        AddressSettingDefinition.AUTO_DELETE_CREATED_QUEUES,
+                                                        AddressSettingDefinition.GROUP_BUCKETS,
+                                                        AddressSettingDefinition.GROUP_REBALANCE,
+                                                        AddressSettingDefinition.GROUP_REBALANCE_PAUSE_DISPATCH,
+                                                        AddressSettingDefinition.GROUP_FIRST_KEY))
                                 .addChild(httpConnector)
                                 .addChild(remoteConnector)
                                 .addChild(invmConnector)

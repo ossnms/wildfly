@@ -16,6 +16,10 @@ import static org.wildfly.extension.messaging.activemq.AddressSettingDefinition.
 import static org.wildfly.extension.messaging.activemq.AddressSettingDefinition.AUTO_DELETE_JMS_QUEUES;
 import static org.wildfly.extension.messaging.activemq.AddressSettingDefinition.AUTO_DELETE_QUEUES;
 import static org.wildfly.extension.messaging.activemq.AddressSettingDefinition.EXPIRY_DELAY;
+import static org.wildfly.extension.messaging.activemq.AddressSettingDefinition.GROUP_BUCKETS;
+import static org.wildfly.extension.messaging.activemq.AddressSettingDefinition.GROUP_FIRST_KEY;
+import static org.wildfly.extension.messaging.activemq.AddressSettingDefinition.GROUP_REBALANCE;
+import static org.wildfly.extension.messaging.activemq.AddressSettingDefinition.GROUP_REBALANCE_PAUSE_DISPATCH;
 import static org.wildfly.extension.messaging.activemq.AddressSettingDefinition.LAST_VALUE_QUEUE;
 import static org.wildfly.extension.messaging.activemq.AddressSettingDefinition.MAX_DELIVERY_ATTEMPTS;
 import static org.wildfly.extension.messaging.activemq.AddressSettingDefinition.MAX_READ_PAGE_BYTES;
@@ -126,6 +130,12 @@ public class AddressSettingsResolveHandler extends AbstractRuntimeOnlyHandler {
         result.get(AUTO_CREATE_QUEUES.getName()).set(settings.isAutoCreateQueues());
         result.get(AUTO_DELETE_QUEUES.getName()).set(settings.isAutoDeleteQueues());
         result.get(AUTO_DELETE_CREATED_QUEUES.getName()).set(settings.isAutoDeleteCreatedQueues());
+        result.get(GROUP_BUCKETS.getName()).set(settings.getDefaultGroupBuckets());
+        result.get(GROUP_REBALANCE.getName()).set(settings.isDefaultGroupRebalance());
+        result.get(GROUP_REBALANCE_PAUSE_DISPATCH.getName()).set(settings.isDefaultGroupRebalancePauseDispatch());
+        if (settings.getDefaultGroupFirstKey() != null) {
+            result.get(GROUP_FIRST_KEY.getName()).set(settings.getDefaultGroupFirstKey().toString());
+        }
     }
 
     public static void registerOperationHandler(ManagementResourceRegistration registry, ResourceDescriptionResolver resolver) {

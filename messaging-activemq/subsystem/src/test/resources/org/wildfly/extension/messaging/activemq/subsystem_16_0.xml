@@ -303,7 +303,11 @@
                          auto-create-queues="${auto.create.queues:true}"
                          auto-delete-queues="${auto.delete.queues:true}"
                          auto-create-addresses="${auto.create.addresses:true}"
-                         auto-delete-addresses="${auto.delete.addresses:true}" />
+                         auto-delete-addresses="${auto.delete.addresses:true}"
+                         group-buckets="${group.buckets:1024}"
+                         group-rebalance="${group.rebalance:true}"
+                         group-rebalance-pause-dispatch="${group.rebalance.pause.dispatch:true}"
+                         group-first-key="${group.first.key:firstKey}" />
 
         <http-connector name="http"
                         socket-binding="http"

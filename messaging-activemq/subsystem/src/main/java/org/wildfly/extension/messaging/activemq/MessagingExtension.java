@@ -275,6 +275,7 @@ public class MessagingExtension implements Extension {
 
     static final String RESOURCE_NAME = MessagingExtension.class.getPackage().getName() + ".LocalDescriptions";
 
+    protected static final ModelVersion VERSION_16_0_1 = ModelVersion.create(16, 0, 1);
     protected static final ModelVersion VERSION_16_0_0 = ModelVersion.create(16, 0, 0);
     protected static final ModelVersion VERSION_15_0_0 = ModelVersion.create(15, 0, 0);
     protected static final ModelVersion VERSION_14_0_0 = ModelVersion.create(14, 0, 0);
@@ -292,7 +293,7 @@ public class MessagingExtension implements Extension {
     protected static final ModelVersion VERSION_3_0_0 = ModelVersion.create(3, 0, 0);
     protected static final ModelVersion VERSION_2_0_0 = ModelVersion.create(2, 0, 0);
     protected static final ModelVersion VERSION_1_0_0 = ModelVersion.create(1, 0, 0);
-    private static final ModelVersion CURRENT_MODEL_VERSION = VERSION_16_0_0;
+    private static final ModelVersion CURRENT_MODEL_VERSION = VERSION_16_0_1;
 
     private static final MessagingSubsystemParser_16_0 CURRENT_PARSER = new MessagingSubsystemParser_16_0();
 

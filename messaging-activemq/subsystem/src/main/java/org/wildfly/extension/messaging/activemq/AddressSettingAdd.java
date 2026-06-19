@@ -89,6 +89,9 @@ class AddressSettingAdd extends AbstractAddStepHandler {
             settings.setSlowConsumerCheckPeriod(AddressSettingDefinition.SLOW_CONSUMER_CHECK_PERIOD.getDefaultValue().asLong());
             settings.setSlowConsumerPolicy(SlowConsumerPolicy.valueOf(AddressSettingDefinition.SLOW_CONSUMER_POLICY.getDefaultValue().asString()));
             settings.setSlowConsumerThreshold(AddressSettingDefinition.SLOW_CONSUMER_THRESHOLD.getDefaultValue().asLong());
+            settings.setDefaultGroupBuckets(AddressSettingDefinition.GROUP_BUCKETS.getDefaultValue().asInt());
+            settings.setDefaultGroupRebalance(AddressSettingDefinition.GROUP_REBALANCE.getDefaultValue().asBoolean());
+            settings.setDefaultGroupRebalancePauseDispatch(AddressSettingDefinition.GROUP_REBALANCE_PAUSE_DISPATCH.getDefaultValue().asBoolean());
             return settings;
         }
     /**
@@ -177,6 +180,18 @@ class AddressSettingAdd extends AbstractAddStepHandler {
         if (isRootAddressMatch || config.hasDefined(AddressSettingDefinition.SLOW_CONSUMER_THRESHOLD.getName())) {
             settings.setSlowConsumerThreshold(AddressSettingDefinition.SLOW_CONSUMER_THRESHOLD.resolveModelAttribute(context, config).asLong());
         }
+        if (isRootAddressMatch || config.hasDefined(AddressSettingDefinition.GROUP_BUCKETS.getName())) {
+            settings.setDefaultGroupBuckets(AddressSettingDefinition.GROUP_BUCKETS.resolveModelAttribute(context, config).asInt());
+        }
+        if (isRootAddressMatch || config.hasDefined(AddressSettingDefinition.GROUP_REBALANCE.getName())) {
+            settings.setDefaultGroupRebalance(AddressSettingDefinition.GROUP_REBALANCE.resolveModelAttribute(context, config).asBoolean());
+        }
+        if (isRootAddressMatch || config.hasDefined(AddressSettingDefinition.GROUP_REBALANCE_PAUSE_DISPATCH.getName())) {
+            settings.setDefaultGroupRebalancePauseDispatch(AddressSettingDefinition.GROUP_REBALANCE_PAUSE_DISPATCH.resolveModelAttribute(context, config).asBoolean());
+        }
+        if (isRootAddressMatch || config.hasDefined(AddressSettingDefinition.GROUP_FIRST_KEY.getName())) {
+            settings.setDefaultGroupFirstKey(asSimpleString(AddressSettingDefinition.GROUP_FIRST_KEY.resolveModelAttribute(context, config), null));
+        }
         return settings;
     }
 
@@ -210,6 +225,9 @@ class AddressSettingAdd extends AbstractAddStepHandler {
         settings.setSlowConsumerCheckPeriod(AddressSettingDefinition.SLOW_CONSUMER_CHECK_PERIOD.getDefaultValue().asLong());
         settings.setSlowConsumerPolicy(SlowConsumerPolicy.valueOf(AddressSettingDefinition.SLOW_CONSUMER_POLICY.getDefaultValue().asString()));
         settings.setSlowConsumerThreshold(AddressSettingDefinition.SLOW_CONSUMER_THRESHOLD.getDefaultValue().asLong());
+        settings.setDefaultGroupBuckets(AddressSettingDefinition.GROUP_BUCKETS.getDefaultValue().asInt());
+        settings.setDefaultGroupRebalance(AddressSettingDefinition.GROUP_REBALANCE.getDefaultValue().asBoolean());
+        settings.setDefaultGroupRebalancePauseDispatch(AddressSettingDefinition.GROUP_REBALANCE_PAUSE_DISPATCH.getDefaultValue().asBoolean());
         return settings;
     }
 

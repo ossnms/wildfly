@@ -148,7 +148,11 @@
                          auto-delete-queues="true"
                          auto-create-addresses="false"
                          auto-delete-addresses="false"
-                         max-read-page-bytes="${max.read.page.bytes:5}" />
+                         max-read-page-bytes="${max.read.page.bytes:5}"
+                         group-buckets="${group.buckets:1024}"
+                         group-rebalance="${group.rebalance:true}"
+                         group-rebalance-pause-dispatch="${group.rebalance.pause.dispatch:true}"
+                         group-first-key="${group.first.key:firstKey}" />
 
         <remote-connector name="netty"
                           socket-binding="messaging-throughput"

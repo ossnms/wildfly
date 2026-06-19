@@ -206,7 +206,12 @@ public class MessagingActiveMQSubsystem_16_0_TestCase extends AbstractSubsystemB
         config.addFailedAttribute(subsystemAddress.append(SERVER_PATH, pathElement(CommonAttributes.HTTP_CONNECTOR)), new FailedOperationTransformationConfig.NewAttributesConfig(CommonAttributes.SSL_CONTEXT));
         config.addFailedAttribute(subsystemAddress.append(SERVER_PATH, pathElement(CommonAttributes.REMOTE_ACCEPTOR)), new FailedOperationTransformationConfig.NewAttributesConfig(CommonAttributes.SSL_CONTEXT));
         config.addFailedAttribute(subsystemAddress.append(SERVER_PATH, pathElement(CommonAttributes.HTTP_ACCEPTOR)), new FailedOperationTransformationConfig.NewAttributesConfig(CommonAttributes.SSL_CONTEXT));
-        config.addFailedAttribute(subsystemAddress.append(SERVER_PATH, ADDRESS_SETTING_PATH), new FailedOperationTransformationConfig.NewAttributesConfig(AddressSettingDefinition.MAX_READ_PAGE_BYTES));
+        config.addFailedAttribute(subsystemAddress.append(SERVER_PATH, ADDRESS_SETTING_PATH), new FailedOperationTransformationConfig.NewAttributesConfig(
+                AddressSettingDefinition.MAX_READ_PAGE_BYTES,
+                AddressSettingDefinition.GROUP_BUCKETS,
+                AddressSettingDefinition.GROUP_REBALANCE,
+                AddressSettingDefinition.GROUP_REBALANCE_PAUSE_DISPATCH,
+                AddressSettingDefinition.GROUP_FIRST_KEY));
         ModelTestUtils.checkFailedTransformedBootOperations(mainServices, messagingVersion, ops, config);
         mainServices.shutdown();
     }
